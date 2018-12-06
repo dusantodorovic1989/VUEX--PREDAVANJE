@@ -2,6 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     {{currentCount}}
+    
 
     <button @click="handlerClick">Increment</button>
     
@@ -10,19 +11,20 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'app',
   components: {
     HelloWorld
   },
-  created(){
-    console.log(this.$store)
-    this.$store.commit('DEMO',{
-      name:'Aleksandra',
-      age:24
-    })
+  async created(){
+    await this.getTodos()
+    // console.log(this.$store)
+    // this.$store.commit('DEMO',{
+    //   name:'Aleksandra',
+    //   age:24
+    // })
   },
   computed: {
     // brojcanik () {
@@ -33,12 +35,14 @@ export default {
     // mapiramo 
     ...mapGetters([
       'currentCount' 
-      ])
+      ]),
+    
   },
   methods: {
     handlerClick(){
       this.$store.dispatch('increment')
-    }
+    },
+    ...mapActions(['getTodos'])
   }
 }
 </script>
